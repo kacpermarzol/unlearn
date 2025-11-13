@@ -210,6 +210,7 @@ class TextGrad(Attacker):
                     print(t)
                     total_loss = 0
                     for i in range(self.iteration):
+                        print(i)
                         self.optimizer.zero_grad()
                         adv_one_hot = STERandSelect.apply(self.adv_embedding)
                         tmp_embeds = adv_one_hot @ task.all_embeddings
