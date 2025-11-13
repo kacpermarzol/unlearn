@@ -120,15 +120,15 @@ class NudeDetector:
         self.input_height = input_shape[3]
         self.input_name = model_inputs[0].name
         
-        def detect(self, image_path):
-            img, orig_w, orig_h = _read_image(
-                image_path, self.input_width, self.input_height
-            )
-            outputs = self.onnx_session.run(None, {self.input_name: img})
-            detections = _postprocess(
-                outputs, orig_w, orig_h, self.input_width, self.input_height
-            )
-            return detections
+    def detect(self, image_path):
+        img, orig_w, orig_h = _read_image(
+            image_path, self.input_width, self.input_height
+        )
+        outputs = self.onnx_session.run(None, {self.input_name: img})
+        detections = _postprocess(
+            outputs, orig_w, orig_h, self.input_width, self.input_height
+        )
+        return detections
 
 
 if __name__ == "__main__":
