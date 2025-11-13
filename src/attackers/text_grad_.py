@@ -171,6 +171,7 @@ class TextGrad(Attacker):
         return adv_embedding,torch.unsqueeze(text,0)    
 
     def run(self, task, logger):
+        print("AAAA")
         
         image, prompt, seed, guidance = task.dataset[self.attack_idx]
         
@@ -205,6 +206,7 @@ class TextGrad(Attacker):
             self.split_embd(input_embeddings,orig_prompt_len)
             if self.sequential:
                 for t in task.sampled_t:
+                    print(t)
                     total_loss = 0
                     for i in range(self.iteration):
                         self.optimizer.zero_grad()
