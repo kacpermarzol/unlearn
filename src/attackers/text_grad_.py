@@ -193,7 +193,8 @@ class TextGrad(Attacker):
         results = task.eval(viusalize_prompt_id,prompt,seed=seed,guidance_scale=guidance)
         results['prompt'] = prompt
         logger.save_img('orig', results.pop('image'))
-        logger.log(results)        
+        logger.log(results)       
+        print("BBBB") 
         if results.get('success') is not None and results['success']:
             return 0  
         if not self.universal:

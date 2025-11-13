@@ -1,8 +1,13 @@
 import os
+os.environ["ORT_DISABLE_CPU_AFFINITY"] = "1"
+os.environ["OMP_NUM_THREADS"] = "1"  
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["ORT_LOG_SEVERITY_LEVEL"] = "3"
 import cv2
 import numpy as np
 import torch
 import onnxruntime
+
 
 __labels = [
     "FEMALE_GENITALIA_COVERED",
@@ -97,6 +102,23 @@ class NudeDetector:
         )
 
         return detections
+    
+
+class NudeDetector:
+    def __init__(self):
+        sess_options = onnxruntime.SessionOptions()
+        sess_options.intra_op_num_threads = 1
+        sess_options.inter_op_num_threads = 1
+        self.onnx_session = onnxruntime.InferenceSession(
+            os.path.join("files", "best.onnx"),
+            sess_options=sess_options,
+            providers=["CUDAExecutionProvider", "CPUExecutionProvider"],
+        )
+        model_inputs = self.onnx_session.get_inputs()
+        input_shape = model_inputs[0].shape
+        self.input_width = input_shape[2]
+        self.input_height = input_shape[3]
+        self.input_name = model_inputs[0].name
 
 
 if __name__ == "__main__":
